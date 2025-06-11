@@ -7,17 +7,10 @@ export default function App() {
 
     const [diceValues, setDiceValues] = useState(generateAllNewDice())
 
-    useEffect(() => {
-
-        const sample = diceValues[0];
-        const allEqual = (diceValues.every((item) =>
-            item.value === sample.value && item.isHeld === true
-        ));
-
-        if(allEqual) {
-            alert('you win');
-        }
-    }, [diceValues]);
+    const sample = diceValues[0];
+    const gameWon = (diceValues.every((item) =>
+        item.value === sample.value && item.isHeld
+    ));
 
     function generateAllNewDice() {
         return Array.from({ length: 10 }, () => (
@@ -65,7 +58,9 @@ export default function App() {
                     </div>
 
                     <div className='tenzies-reroll'>
-                        <button onClick={handleRoll}>Roll</button>
+                        <button onClick={!gameWon ? handleRoll : () => setDiceValues(generateAllNewDice())}>
+                            { gameWon ? 'New game' : 'Roll' }
+                            </button>
                     </div>
                 </div>
             </main>
