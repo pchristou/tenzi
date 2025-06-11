@@ -1,19 +1,38 @@
 import Die from './components/Die.jsx';
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { nanoid } from 'nanoid'
 import Confetti from 'react-confetti'
 
 export default function App() {
 
+    const btnRef = useRef(null);
     const [diceValues, setDiceValues] = useState(() => generateAllNewDice());
+
+    /**
+     *
+     * Hints:
+     * 1. Focusing a DOM element with the DOMNode.focus() method
+     *    requires accessing the native DOM node. What tool have
+     *    we learned about that allows us to do that?
+     *
+     * 2. Automatically calling the .focus() on a DOM element when
+     *    the game is won requires us to synchronize the local
+     *    `gameWon` variable with an external system (the DOM). What
+     *    tool have we learned about that allows us to do that?
+     */
 
     const sample = diceValues[0];
     const gameWon = (diceValues.every((item) =>
         item.value === sample.value && item.isHeld
     ));
 
+    useEffect(() => {
+        if(gameWon) {
+            btnRef.current.focus();
+        }
+    }, [gameWon]);
+
     function generateAllNewDice() {
-        console.log('ok')
         return Array.from({ length: 10 }, () => (
             {
                 id: nanoid(),
@@ -52,19 +71,24 @@ export default function App() {
                 <div className='tenzies-grid'>
 
                     <h1 className="tenzies-title">Tenzies</h1>
-                    <p className="tenzies-instructions">Roll until all dice are the same. Click each die to freeze it at its current value
+                    <p className="tenzies-instructions">Roll until all dice are the same. Click each die to freeze it at its
+                        current value
                         between rolls.</p>
                     <div className='tenzies-grid-item'>
                         {dice}
                     </div>
 
                     <div className='tenzies-reroll'>
-                        <button onClick={gameWon ? () => setDiceValues(generateAllNewDice()) : handleRoll}>
-                            { gameWon ? 'New game' : 'Roll' }
+                        <button ref={btnRef}
+                                onClick={gameWon ? () => setDiceValues(generateAllNewDice()) : handleRoll}>
+                            {gameWon ? 'New game' : 'Roll'}
                         </button>
                     </div>
 
-                    { gameWon && <Confetti/> }
+                    {gameWon && <Confetti/>}
+                    <div aria-live="polite" className="sr-only">
+                        {gameWon && <p>Congratulations! You won! Press "New Game" to start again.</p>}
+                    </div>
                 </div>
             </main>
         </div>

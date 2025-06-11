@@ -5,7 +5,12 @@ export default function Die({ id, isHeld, value, clickCallback }) {
 
     return (
         <div className='die'>
-            <button onClick={() => clickCallback(id)} style={styles} className='die-button'>
+            <button
+                aria-pressed={isHeld}
+                aria-label={`Die with value ${value}, ${isHeld ? "held" : "not held"}`}
+                onClick={() => clickCallback(id)} style={styles}
+                className='die-button'
+            >
                 {value}
             </button>
         </div>
