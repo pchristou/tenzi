@@ -1,11 +1,11 @@
-import Header from './components/Header.jsx';
 import Die from './components/Die.jsx';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { nanoid } from 'nanoid'
+import Confetti from 'react-confetti'
 
 export default function App() {
 
-    const [diceValues, setDiceValues] = useState(generateAllNewDice())
+    const [diceValues, setDiceValues] = useState(() => generateAllNewDice());
 
     const sample = diceValues[0];
     const gameWon = (diceValues.every((item) =>
@@ -13,6 +13,7 @@ export default function App() {
     ));
 
     function generateAllNewDice() {
+        console.log('ok')
         return Array.from({ length: 10 }, () => (
             {
                 id: nanoid(),
@@ -58,10 +59,12 @@ export default function App() {
                     </div>
 
                     <div className='tenzies-reroll'>
-                        <button onClick={!gameWon ? handleRoll : () => setDiceValues(generateAllNewDice())}>
+                        <button onClick={gameWon ? () => setDiceValues(generateAllNewDice()) : handleRoll}>
                             { gameWon ? 'New game' : 'Roll' }
-                            </button>
+                        </button>
                     </div>
+
+                    { gameWon && <Confetti/> }
                 </div>
             </main>
         </div>
