@@ -3,15 +3,19 @@ export default function Die({ id, isHeld, value, clickCallback }) {
         backgroundColor: isHeld ? '#59E391' : 'white'
     }
 
+    const dots = Array.from({ length: 9 }, () => <span className='dot'>&nbsp;</span>)
+
+    console.log(dots);
+
     return (
         <div className='die'>
             <button
                 aria-pressed={isHeld}
                 aria-label={`Die with value ${value}, ${isHeld ? "held" : "not held"}`}
                 onClick={() => clickCallback(id)} style={styles}
-                className='die-button'
+                className={`dice-face face-${value}`}
             >
-                {value}
+                {dots}
             </button>
         </div>
     )

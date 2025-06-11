@@ -628,6 +628,65 @@ body {
             width: 36px;
             height: 36px;
         }
+
+        .dice-face {
+            width: 50px;
+            height: 50px;
+            background-color: white;
+            border: 2px solid #ccc;
+            border-radius: 10px;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            grid-template-rows: repeat(3, 1fr);
+            gap: 4px;
+            padding: 6px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            cursor: pointer;
+        }
+
+        .dot {
+            width: 8px;
+            height: 8px;
+            background-color: black;
+            border-radius: 50%;
+            justify-self: center;
+            align-self: center;
+            visibility: hidden; /* hide by default */
+        }
+
+        /* Face 1 */
+        .face-1 .dot:nth-child(5) { visibility: visible; }
+
+        /* Face 2 */
+        .face-2 .dot:nth-child(1),
+        .face-2 .dot:nth-child(9) { visibility: visible; }
+
+        /* Face 3 */
+        .face-3 .dot:nth-child(1),
+        .face-3 .dot:nth-child(5),
+        .face-3 .dot:nth-child(9) { visibility: visible; }
+
+        /* Face 4 */
+        .face-4 .dot:nth-child(1),
+        .face-4 .dot:nth-child(3),
+        .face-4 .dot:nth-child(7),
+        .face-4 .dot:nth-child(9) { visibility: visible; }
+
+        /* Face 5 */
+        .face-5 .dot:nth-child(1),
+        .face-5 .dot:nth-child(3),
+        .face-5 .dot:nth-child(5),
+        .face-5 .dot:nth-child(7),
+        .face-5 .dot:nth-child(9) { visibility: visible; }
+
+        /* Face 6 */
+        .face-6 .dot:nth-child(1),
+        .face-6 .dot:nth-child(4),
+        .face-6 .dot:nth-child(7),
+        .face-6 .dot:nth-child(3),
+        .face-6 .dot:nth-child(6),
+        .face-6 .dot:nth-child(9) { visibility: visible; }
+
     }
 
     .sr-only {
