@@ -516,6 +516,10 @@ body {
         align-items: center;
     }
 
+    .stats {
+        text-align: center;
+    }
+
     .tenzies-reroll {
         display: flex;
         justify-content: center;

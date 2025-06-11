@@ -100,7 +100,7 @@ export default function App() {
                         current value
                         between rolls.</p>
 
-                    <div>
+                    <div className='stats'>
                     Timer: { timer }<br/>
                     Roll:{ rollCount }
                     </div>
