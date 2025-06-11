@@ -5,8 +5,6 @@ export default function Die({ id, isHeld, value, clickCallback }) {
 
     const dots = Array.from({ length: 9 }, () => <span className='dot'>&nbsp;</span>)
 
-    console.log(dots);
-
     return (
         <div className='die'>
             <button
