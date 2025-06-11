@@ -6,7 +6,7 @@ import Confetti from 'react-confetti'
 export default function App() {
 
     const [rollCount, setRollCount] = useState(0);
-    const [timer, setTimer] = useState(0);
+    const [timer, setTimer] = useState(() => 0);
 
     const btnRef = useRef(null);
     let interval = useRef(null);
@@ -18,15 +18,21 @@ export default function App() {
         item.value === sample.value && item.isHeld
     ));
 
-    useEffect(() => {
+    const startTimer = () => {
+        // Prevent multiple intervals
+        if (interval.current !== null) return;
 
         interval.current = setInterval(() => {
             setTimer((prev) => prev + 1);
         }, 1000);
+    };
 
-        return () => clearInterval(interval.current)
+    startTimer();
 
-    }, []);
+    function stopTimer() {
+        clearInterval(interval.current);
+        interval.current = null;
+    }
 
     useEffect(() => {
         if(gameWon) {
@@ -53,6 +59,7 @@ export default function App() {
     function reset() {
         setRollCount(0);
         setTimer(0);
+        stopTimer();
     }
 
     function handleRoll() {
