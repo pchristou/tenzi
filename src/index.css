@@ -570,10 +570,24 @@ body {
         width: 320px;
     }
 
+    .tenzies-title {
+        font-size: 40px;
+        margin: 0 0 10px 0;
+        align-self: center;
+    }
+
+    .tenzies-instructions {
+        font-family: 'Inter', sans-serif;
+        font-weight: 400;
+        margin-top: 0;
+        text-align: center;
+    }
+
     .tenzies-grid {
+        padding: 10px;
         margin: 20px;
         background-color: #F5F5F5;
-        height: 320px;
+        height: 100%;
         border-radius: 10px;
         place-content: center;
 

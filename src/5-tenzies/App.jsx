@@ -1,36 +1,65 @@
 import Header from './components/Header.jsx';
 import Die from './components/Die.jsx';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { nanoid } from 'nanoid'
 
 export default function App() {
 
-    const [diceNumbers, setDiceNumbers] = useState(generateAllNewDice())
+    const [diceValues, setDiceValues] = useState(generateAllNewDice())
+
+    useEffect(() => {
+
+        const sample = diceValues[0];
+        const allEqual = (diceValues.every((item) =>
+            item.value === sample.value && item.isHeld === true
+        ));
+
+        if(allEqual) {
+            alert('you win');
+        }
+    }, [diceValues]);
 
     function generateAllNewDice() {
-        return Array.from({ length: 10 }, () => Math.floor(Math.random() * 6) + 1);
+        return Array.from({ length: 10 }, () => (
+            {
+                id: nanoid(),
+                isHeld: false,
+                value: Math.floor(Math.random() * 6) + 1
+            }
+        ));
     }
-
-
-    /**
-     * Challenge: Create a `Roll Dice` button that will re-roll
-     * all 10 dice
-     *
-     * Clicking the button should generate a new array of numbers
-     * and set the `dice` state to that new array (thus re-rendering
-     * the array to the page)
-     */
 
     function handleRoll() {
-        setDiceNumbers(generateAllNewDice());
+        // only those that are isHeld false to re-roll
+        setDiceValues(prevValues => {
+            return prevValues.map(prevValue =>
+                !prevValue.isHeld
+                    ? { ...prevValue, value: Math.floor(Math.random() * 6) + 1 }
+                    : prevValue
+            );
+        });
     }
 
-    const dice = diceNumbers.map(dieNumber => <Die value={dieNumber} />)
+    function holdDieNumber(id) {
+        setDiceValues(prevValue => {
+            return prevValue.map(diceValue => diceValue.id === id
+            ? {...diceValue, isHeld: !diceValue.isHeld }
+            : diceValue
+        ) });
+    }
+
+    const dice = diceValues.map(diceValue =>
+        <Die clickCallback={holdDieNumber} key={diceValue.id} {...diceValue} />
+    )
 
     return (
         <div className='tenzies'>
             <main className='tenzies-container'>
                 <div className='tenzies-grid'>
-                    {/*<Header />*/}
+
+                    <h1 className="tenzies-title">Tenzies</h1>
+                    <p className="tenzies-instructions">Roll until all dice are the same. Click each die to freeze it at its current value
+                        between rolls.</p>
                     <div className='tenzies-grid-item'>
                         {dice}
                     </div>
