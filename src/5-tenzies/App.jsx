@@ -2,8 +2,11 @@ import Die from './components/Die.jsx';
 import { useEffect, useRef, useState } from 'react';
 import { nanoid } from 'nanoid'
 import Confetti from 'react-confetti'
+import { useWindowSize } from 'react-use'
 
 export default function App() {
+
+    const { width, height } = useWindowSize()
 
     const [rollCount, setRollCount] = useState(0);
     const [timer, setTimer] = useState(() => 0);
@@ -96,8 +99,11 @@ export default function App() {
                     <p className="tenzies-instructions">Roll until all dice are the same. Click each die to freeze it at its
                         current value
                         between rolls.</p>
-                    { timer }<br/>
-                    { rollCount }
+
+                    <div>
+                    Timer: { timer }<br/>
+                    Roll:{ rollCount }
+                    </div>
                     <div className='tenzies-grid-item'>
                         {dice}
                     </div>
@@ -109,7 +115,12 @@ export default function App() {
                         </button>
                     </div>
 
-                    {gameWon && <Confetti/>}
+                    {gameWon &&
+                        <Confetti
+                            width={width}
+                            height={height-1}
+                            recycle={false}
+                        />}
                     <div aria-live="polite" className="sr-only">
                         {gameWon && <p>Congratulations! You won! Press "New Game" to start again.</p>}
                     </div>
