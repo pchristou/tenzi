@@ -7,13 +7,13 @@ body {
 }
 
 :root {
-    font-family: "Inter", system-ui, Avenir, Helvetica, Arial, sans-serif;
+    font-family: "Karla", system-ui, Avenir, Helvetica, Arial, sans-serif;
 }
 
 :not(.tenzies) {
 
     :root {
-        font-family: "Inter", system-ui, Avenir, Helvetica, Arial, sans-serif;
+        font-family: "Karla", system-ui, Avenir, Helvetica, Arial, sans-serif;
         line-height: 1.5;
         font-weight: 100;
 
@@ -562,16 +562,57 @@ body {
 .tenzies {
     background-color: #0B2434;
     width: 100%;
+    display: flex;
+    align-items: center;
 
     .tenzies-container {
         margin: 0 auto;
-        width: 500px;
+        width: 320px;
     }
 
-    .tenzies-wrapper {
+    .tenzies-grid {
         margin: 20px;
         background-color: #F5F5F5;
         height: 320px;
         border-radius: 10px;
+        place-content: center;
+
+        display: flex;
+        flex-direction: column;
+        justify-content: space-evenly;
+    }
+
+    .tenzies-grid-item {
+        display: grid;
+        grid-template-columns: repeat(5, 1fr); /* 5 equal-width columns */
+        grid-template-rows: repeat(2, 60px);  /* 2 rows, each 100px tall */
+        justify-items: center;
+        align-items: center;
+    }
+
+    .tenzies-reroll {
+        display: flex;
+        justify-content: center;
+
+        button {
+            background-color: #5035FF;
+            color: #ffffff;
+        }
+    }
+
+    .die {
+
+        .die-button {
+            display: flex;
+            justify-content: center; /* horizontal centering */
+            align-items: center;     /* vertical centering */
+
+            border-radius: 3.813px;
+            background: #FFF;
+            box-shadow: 0px 2px 2px 0px rgba(0, 0, 0, 0.15);
+
+            width: 36px;
+            height: 36px;
+        }
     }
 }
