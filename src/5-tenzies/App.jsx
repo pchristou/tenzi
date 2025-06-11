@@ -71,9 +71,9 @@ export default function App() {
     function holdDieNumber(id) {
         setDiceValues(prevValue => {
             return prevValue.map(diceValue => diceValue.id === id
-            ? {...diceValue, isHeld: !diceValue.isHeld }
-            : diceValue
-        ) });
+                ? {...diceValue, isHeld: !diceValue.isHeld }
+                : diceValue
+            ) });
     }
 
     const dice = diceValues.map(diceValue =>
