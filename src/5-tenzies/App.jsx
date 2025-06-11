@@ -9,6 +9,8 @@ export default function App() {
     const [timer, setTimer] = useState(0);
 
     const btnRef = useRef(null);
+    let interval = useRef(null);
+
     const [diceValues, setDiceValues] = useState(() => generateAllNewDice());
 
     const sample = diceValues[0];
@@ -17,18 +19,23 @@ export default function App() {
     ));
 
     useEffect(() => {
-        setInterval(() => {
+
+        interval.current = setInterval(() => {
             setTimer((prev) => prev + 1);
         }, 1000);
-    }, [])
+
+        return () => clearInterval(interval.current)
+
+    }, []);
 
     useEffect(() => {
         if(gameWon) {
             btnRef.current.focus();
+            clearInterval(interval.current);
         }
 
         //return () => reset();
-    }, [gameWon]);
+    }, [gameWon, interval]);
 
     function generateAllNewDice() {
 
